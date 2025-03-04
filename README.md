@@ -26,7 +26,7 @@ PyTorch 1.10+ removed torch._six module，replaced by Python standard library co
 
 # Replace：
 from torch._six import container_abcs
-# by：
+# By：
 import collections.abc as container_abcs
 ```
 
@@ -157,6 +157,19 @@ CUDA_VISIBLE_DEVICES=0 python test.py --dataset dtu --batch_size 1 \
                                        --testlist ./lists/dtu/test.txt \
                                        --resume ${MODEL_WEIGHT_PATH} \
                                        --outdir ${OUTPUT_DIR} \
+                                       --fusibile_exe_path ./fusibile/fusibile \
+                                       --interval_scale 1.06 --num_view 5 \
+                                       --numdepth 192 --max_h 1152 --max_w 1536 --filter_method gipuma \
+                                       --disp_threshold 0.1 --num_consistent 2 \
+                                       --prob_threshold 0.5,0.5,0.5,0.5 \
+                                       --combine_conf --tmps 5.0,5.0,5.0,1.0
+
+# example:
+CUDA_VISIBLE_DEVICES=0 python test.py --dataset dtu --batch_size 1 \
+                                       --testpath ./data/dtu \
+                                       --testlist ./lists/dtu/test.txt \
+                                       --resume ./pretrained_weights/MVSFormer/best.pth \
+                                       --outdir output_test \
                                        --fusibile_exe_path ./fusibile/fusibile \
                                        --interval_scale 1.06 --num_view 5 \
                                        --numdepth 192 --max_h 1152 --max_w 1536 --filter_method gipuma \
