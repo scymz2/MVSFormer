@@ -12,12 +12,30 @@ Codes of MVSFormer: Multi-View Stereo by Learning Robust Image Features and Temp
 ```
 git clone https://github.com/ewrfcas/MVSFormer.git
 cd MVSFormer
+conda create -n mvsformer python=3.9 -y
+conda activate mvsformer
+pip install torch==1.9.0+cu111 torchvision==0.10.0+cu111 torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
 pip install -r requirements.txt
+```
+
+## A small problem here
+PyTorch 1.10+ removed torch._six module，replaced by Python standard library collections.abc, and old version of timm is using torch._six module, so we need to modify:
+```
+# file path：
+/home/your_username/miniconda3/envs/mvsformer/lib/python3.9/site-packages/timm/models/layers/helpers.py
+
+# Replace：
+from torch._six import container_abcs
+# by：
+import collections.abc as container_abcs
 ```
 
 We also highly recommend to install fusibile from (https://github.com/YoYo000/fusibile) for the depth fusion.
 
 ```
+# sudo apt install cmake
+# sudo apt update
+# sudo apt install gcc-9 g++-9
 git clone https://github.com/YoYo000/fusibile.git
 cd fusibile
 cmake .
